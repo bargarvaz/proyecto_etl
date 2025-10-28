@@ -1,0 +1,54 @@
+{
+  "uid": "etl-overview",
+  "title": "ETL Overview",
+  "schemaVersion": 39,
+  "version": 1,
+  "timezone": "",
+  "tags": ["etl","postgres","prometheus"],
+  "panels": [
+    {
+      "type": "stat",
+      "title": "Postgres Exporter UP",
+      "gridPos": {"h": 4, "w": 6, "x": 0, "y": 0},
+      "targets": [
+        {"expr": "up{job=\"postgres\"}", "legendFormat": "postgres exporter"}
+      ]
+    },
+    {
+      "type": "stat",
+      "title": "TPS (commits+rollbacks) – 5m rate",
+      "gridPos": {"h": 4, "w": 12, "x": 6, "y": 0},
+      "targets": [
+        {"expr": "rate(pg_stat_database_xact_commit{datname=\"payments\"}[5m]) + rate(pg_stat_database_xact_rollback{datname=\"payments\"}[5m])", "legendFormat": "TPS"}
+      ]
+    },
+    {
+      "type": "timeSeries",
+      "title": "TPS histórico – 5m rate",
+      "gridPos": {"h": 8, "w": 18, "x": 0, "y": 4},
+      "targets": [
+        {"expr": "rate(pg_stat_database_xact_commit{datname=\"payments\"}[5m])", "legendFormat": "commit"},
+        {"expr": "rate(pg_stat_database_xact_rollback{datname=\"payments\"}[5m])", "legendFormat": "rollback"}
+      ]
+    },
+    {
+      "type": "stat",
+      "title": "Connections (payments)",
+      "gridPos": {"h": 4, "w": 6, "x": 18, "y": 0},
+      "targets": [
+        {"expr": "sum(pg_stat_activity_count{datname=\"payments\"})", "legendFormat": "connections"}
+      ]
+    },
+    {
+      "type": "timeSeries",
+      "title": "Buffers Read vs Hit",
+      "gridPos": {"h": 8, "w": 24, "x": 0, "y": 12},
+      "targets": [
+        {"expr": "rate(pg_stat_database_blks_read{datname=\"payments\"}[5m])", "legendFormat": "blks_read"},
+        {"expr": "rate(pg_stat_database_blks_hit{datname=\"payments\"}[5m])", "legendFormat": "blks_hit"}
+      ]
+    }
+  ],
+  "time": {"from": "now-6h", "to": "now"},
+  "refresh": "10s"
+}

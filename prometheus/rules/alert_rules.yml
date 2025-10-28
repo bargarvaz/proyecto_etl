@@ -1,0 +1,11 @@
+groups:
+- name: postgres.rules
+  rules:
+  - alert: PostgresExporterDown
+    expr: up{job="postgres"} == 0
+    for: 2m
+    labels:
+      severity: critical
+    annotations:
+      summary: "Postgres exporter is down"
+      description: "No metrics from postgres-exporter for 2 minutes."

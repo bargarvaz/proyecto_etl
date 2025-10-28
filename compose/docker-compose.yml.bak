@@ -1,0 +1,82 @@
+services:
+    postgres:
+    image: postgres:15
+    container_name: etl_postgres
+    restart: always
+    env_file:
+      - ../.env
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ../db/init:/docker-entrypoint-initdb.d
+    command:
+      - "postgres"
+      - "-c"
+      - "shared_buffers=512MB"
+      - "-c"
+      - "work_mem=64MB"
+      - "-c"
+      - "wal_compression=on"
+      - "-c"
+      - "max_wal_size=2GB"
+      - "-c"
+      - "effective_cache_size=2GB"
+    ports:
+      - "5432:5432"
+
+  postgres_exporter:
+    image: prometheuscommunity/postgres-exporter:latest
+    container_name: etl_postgres_exporter
+    environment:
+      DATA_SOURCE_NAME: "postgresql://pguser:pgpass@postgres:5432/payments?sslmode=disable"
+    ports:
+      - "9187:9187"
+    depends_on:
+      - postgres
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: etl_rabbitmq
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: etl_prometheus
+    volumes:
+      - ../prometheus:/etc/prometheus
+    ports:
+      - "9090:9090"
+    depends_on:
+      - postgres_exporter
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: etl_grafana
+    environment:
+      GF_SECURITY_ADMIN_USER: admin
+      GF_SECURITY_ADMIN_PASSWORD: admin
+    volumes:
+      - ../grafana/provisioning:/etc/grafana/provisioning
+    ports:
+      - "3000:3000"
+    depends_on:
+      - prometheus
+
+  etl_worker:
+    build:
+      context: ..
+      dockerfile: etl/Dockerfile
+    container_name: etl_worker
+    restart: always
+    env_file:
+      - ../.env
+    depends_on:
+      - rabbitmq
+      - postgres
+
+volumes:
+  pgdata:

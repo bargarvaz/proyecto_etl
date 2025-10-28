@@ -1,0 +1,78 @@
+                                                                            QUERY PLAN                                                                             
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Finalize GroupAggregate  (cost=209405.24..209456.41 rows=200 width=40) (actual time=1560.370..1576.860 rows=21 loops=1)
+   Group Key: (to_char(txn.created_at, 'YYYYMM'::text))
+   Buffers: shared hit=260 read=122195 dirtied=267 written=4558
+   ->  Gather Merge  (cost=209405.24..209451.91 rows=400 width=40) (actual time=1560.356..1576.841 rows=24 loops=1)
+         Workers Planned: 2
+         Workers Launched: 2
+         Buffers: shared hit=260 read=122195 dirtied=267 written=4558
+         ->  Sort  (cost=208405.21..208405.71 rows=200 width=40) (actual time=1542.505..1542.514 rows=8 loops=3)
+               Sort Key: (to_char(txn.created_at, 'YYYYMM'::text))
+               Sort Method: quicksort  Memory: 25kB
+               Buffers: shared hit=260 read=122195 dirtied=267 written=4558
+               Worker 0:  Sort Method: quicksort  Memory: 25kB
+               Worker 1:  Sort Method: quicksort  Memory: 25kB
+               ->  Partial HashAggregate  (cost=208395.07..208397.57 rows=200 width=40) (actual time=1542.453..1542.464 rows=8 loops=3)
+                     Group Key: (to_char(txn.created_at, 'YYYYMM'::text))
+                     Batches: 1  Memory Usage: 40kB
+                     Buffers: shared hit=244 read=122195 dirtied=267 written=4558
+                     Worker 0:  Batches: 1  Memory Usage: 40kB
+                     Worker 1:  Batches: 1  Memory Usage: 40kB
+                     ->  Parallel Append  (cost=0.00..189297.50 rows=3819514 width=32) (actual time=22.142..1205.325 rows=3054190 loops=3)
+                           Buffers: shared hit=244 read=122195 dirtied=267 written=4558
+                           ->  Parallel Seq Scan on txn_202407 txn_7  (cost=0.00..8897.21 rows=199777 width=32) (actual time=19.990..211.372 rows=479182 loops=1)
+                                 Buffers: shared hit=20 read=6381 dirtied=7 written=194
+                           ->  Parallel Seq Scan on txn_202401 txn_1  (cost=0.00..8815.09 rows=197847 width=32) (actual time=22.757..207.358 rows=474521 loops=1)
+                                 Buffers: shared hit=20 read=6323 dirtied=7 written=331
+                           ->  Parallel Seq Scan on txn_202410 txn_10  (cost=0.00..8755.06 rows=196405 width=32) (actual time=0.056..156.251 rows=471114 loops=1)
+                                 Buffers: shared hit=16 read=6285 dirtied=10 written=242
+                           ->  Parallel Seq Scan on txn_202505 txn_17  (cost=0.00..8706.80 rows=195024 width=32) (actual time=0.049..189.372 rows=467891 loops=1)
+                                 Buffers: shared hit=15 read=6255 dirtied=11 written=311
+                           ->  Parallel Seq Scan on txn_202506 txn_18  (cost=0.00..8698.83 rows=195027 width=32) (actual time=0.056..156.168 rows=467961 loops=1)
+                                 Buffers: shared hit=14 read=6248 dirtied=14 written=235
+                           ->  Parallel Seq Scan on txn_202406 txn_6  (cost=0.00..8580.69 rows=192775 width=32) (actual time=0.050..154.162 rows=462372 loops=1)
+                                 Buffers: shared hit=12 read=6159 dirtied=13 written=99
+                           ->  Parallel Seq Scan on txn_202405 txn_5  (cost=0.00..8414.88 rows=188950 width=32) (actual time=0.053..138.240 rows=453404 loops=1)
+                                 Buffers: shared hit=12 read=6042 dirtied=13 written=5
+                           ->  Parallel Seq Scan on txn_202507 txn_19  (cost=0.00..8143.22 rows=182898 width=32) (actual time=0.049..139.607 rows=438862 loops=1)
+                                 Buffers: shared hit=12 read=5846 dirtied=13 written=1
+                           ->  Parallel Seq Scan on txn_202403 txn_3  (cost=0.00..8139.66 rows=182692 width=32) (actual time=0.049..129.964 rows=438289 loops=1)
+                                 Buffers: shared hit=11 read=5845 dirtied=13 written=6
+                           ->  Parallel Seq Scan on txn_202503 txn_15  (cost=0.00..8134.96 rows=182557 width=32) (actual time=0.044..128.487 rows=437916 loops=1)
+                                 Buffers: shared hit=11 read=5843 dirtied=13 written=2
+                           ->  Parallel Seq Scan on txn_202402 txn_2  (cost=0.00..8123.33 rows=182346 width=32) (actual time=0.040..133.758 rows=437876 loops=1)
+                                 Buffers: shared hit=6 read=5838 dirtied=18 written=237
+                           ->  Parallel Seq Scan on txn_202412 txn_12  (cost=0.00..8074.19 rows=181375 width=32) (actual time=0.047..149.321 rows=435032 loops=1)
+                                 Buffers: shared hit=5 read=5802 dirtied=19 written=865
+                           ->  Parallel Seq Scan on txn_202501 txn_13  (cost=0.00..8071.51 rows=181161 width=32) (actual time=0.035..43.427 rows=144979 loops=3)
+                                 Buffers: shared hit=5 read=5803 dirtied=19 written=604
+                           ->  Parallel Seq Scan on txn_202508 txn_20  (cost=0.00..8041.62 rows=180450 width=32) (actual time=0.035..62.097 rows=216553 loops=2)
+                                 Buffers: shared hit=5 read=5782 dirtied=19
+                           ->  Parallel Seq Scan on txn_202409 txn_9  (cost=0.00..7974.99 rows=178879 width=32) (actual time=0.045..134.325 rows=429048 loops=1)
+                                 Buffers: shared hit=6 read=5734 dirtied=18 written=813
+                           ->  Parallel Seq Scan on txn_202504 txn_16  (cost=0.00..7966.10 rows=178888 width=32) (actual time=0.042..127.917 rows=429078 loops=1)
+                                 Buffers: shared hit=12 read=5719 dirtied=12 written=5
+                           ->  Parallel Seq Scan on txn_202408 txn_8  (cost=0.00..7928.21 rows=177937 width=32) (actual time=0.039..132.366 rows=426806 loops=1)
+                                 Buffers: shared hit=11 read=5694 dirtied=13 written=8
+                           ->  Parallel Seq Scan on txn_202411 txn_11  (cost=0.00..7747.65 rows=173812 width=32) (actual time=0.039..134.453 rows=416884 loops=1)
+                                 Buffers: shared hit=11 read=5565 dirtied=12
+                           ->  Parallel Seq Scan on txn_202404 txn_4  (cost=0.00..7670.11 rows=172009 width=32) (actual time=0.051..157.145 rows=412891 loops=1)
+                                 Buffers: shared hit=12 read=5509 dirtied=12 written=300
+                           ->  Parallel Seq Scan on txn_202502 txn_14  (cost=0.00..7019.81 rows=157665 width=32) (actual time=0.063..152.666 rows=378273 loops=1)
+                                 Buffers: shared hit=15 read=5035 dirtied=6 written=125
+                           ->  Parallel Seq Scan on txn_202509 txn_21  (cost=0.00..6255.65 rows=140452 width=32) (actual time=23.676..149.315 rows=337127 loops=1)
+                                 Buffers: shared hit=13 read=4487 dirtied=5 written=175
+                           ->  Parallel Seq Scan on txn_202510 txn_22  (cost=0.00..13.45 rows=276 width=32) (actual time=0.000..0.000 rows=0 loops=1)
+                           ->  Parallel Seq Scan on txn_202511 txn_23  (cost=0.00..13.45 rows=276 width=32) (actual time=0.000..0.000 rows=0 loops=1)
+                           ->  Parallel Seq Scan on txn_202512 txn_24  (cost=0.00..13.45 rows=276 width=32) (actual time=0.000..0.000 rows=0 loops=1)
+ Planning:
+   Buffers: shared hit=1985 read=90 dirtied=1
+ Planning Time: 4.426 ms
+ JIT:
+   Functions: 159
+   Options: Inlining false, Optimization false, Expressions true, Deforming true
+   Timing: Generation 8.607 ms, Inlining 0.000 ms, Optimization 3.046 ms, Emission 63.467 ms, Total 75.120 ms
+ Execution Time: 1596.626 ms
+(74 rows)
+

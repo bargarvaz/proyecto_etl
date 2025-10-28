@@ -1,0 +1,14 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+.env
+
+# Backups pesados
+backups/*.sql
+backups/*.sql.gz
+
+# Editor/OS
+.DS_Store
+*.swp

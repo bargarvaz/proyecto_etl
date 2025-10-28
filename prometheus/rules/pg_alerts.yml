@@ -1,0 +1,11 @@
+groups:
+- name: db.availability
+  rules:
+  - alert: PostgresDown
+    expr: up{job="postgres"} == 0
+    for: 1m
+    labels:
+      severity: critical
+    annotations:
+      summary: "PostgreSQL caído"
+      description: "No hay métricas del postgres-exporter por 1 minuto."

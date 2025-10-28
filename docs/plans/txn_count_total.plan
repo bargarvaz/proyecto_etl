@@ -1,0 +1,83 @@
+                                                                                                  QUERY PLAN                                                                                                   
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Finalize Aggregate  (cost=186733.58..186733.59 rows=1 width=8) (actual time=2320.096..2327.375 rows=1 loops=1)
+   Buffers: shared hit=13337 read=42693 written=11450
+   ->  Gather  (cost=186733.36..186733.57 rows=2 width=8) (actual time=2319.911..2327.365 rows=3 loops=1)
+         Workers Planned: 2
+         Workers Launched: 2
+         Buffers: shared hit=13337 read=42693 written=11450
+         ->  Partial Aggregate  (cost=185733.36..185733.37 rows=1 width=8) (actual time=2303.951..2303.957 rows=1 loops=3)
+               Buffers: shared hit=13337 read=42693 written=11450
+               ->  Parallel Append  (cost=0.42..175876.86 rows=3942602 width=0) (actual time=3.689..2196.832 rows=3154190 loops=3)
+                     Buffers: shared hit=13337 read=42693 written=11450
+                     ->  Parallel Index Only Scan using txn_202401_account_id_created_at_idx on txn_202401 txn_1  (cost=0.42..8070.13 rows=204079 width=0) (actual time=3.545..971.343 rows=490241 loops=1)
+                           Heap Fetches: 5290
+                           Buffers: shared hit=5255 read=856
+                     ->  Parallel Index Only Scan using txn_202407_merchant_id_created_at_idx on txn_202407 txn_7  (cost=0.42..8053.96 rows=206252 width=0) (actual time=3.600..36.909 rows=495022 loops=1)
+                           Heap Fetches: 3710
+                           Buffers: shared hit=3711 read=825 written=140
+                     ->  Parallel Index Only Scan using txn_202410_merchant_id_created_at_idx on txn_202410 txn_10  (cost=0.42..7761.14 rows=202760 width=0) (actual time=0.099..1821.816 rows=486624 loops=1)
+                           Heap Fetches: 533
+                           Buffers: shared hit=460 read=814 written=1
+                     ->  Parallel Index Only Scan using txn_202505_merchant_id_created_at_idx on txn_202505 txn_17  (cost=0.42..7686.77 rows=201380 width=0) (actual time=0.121..27.627 rows=483311 loops=1)
+                           Heap Fetches: 0
+                           Buffers: shared hit=2 read=809
+                     ->  Parallel Index Only Scan using txn_202506_merchant_id_created_at_idx on txn_202506 txn_18  (cost=0.42..7684.24 rows=201446 width=0) (actual time=0.100..740.773 rows=483471 loops=1)
+                           Heap Fetches: 0
+                           Buffers: shared hit=2 read=808
+                     ->  Parallel Index Only Scan using txn_202503_merchant_id_created_at_idx on txn_202503 txn_15  (cost=0.42..7294.38 rows=188452 width=0) (actual time=0.116..128.555 rows=452286 loops=1)
+                           Heap Fetches: 0
+                           Buffers: shared hit=2 read=784 written=131
+                     ->  Parallel Index Only Scan using txn_202507_account_id_created_at_idx on txn_202507 txn_19  (cost=0.42..7291.32 rows=188859 width=0) (actual time=0.155..27.071 rows=453262 loops=1)
+                           Heap Fetches: 0
+                           Buffers: shared hit=2 read=781 written=381
+                     ->  Parallel Index Only Scan using txn_202501_merchant_id_created_at_idx on txn_202501 txn_13  (cost=0.42..7265.14 rows=187123 width=0) (actual time=0.094..26.769 rows=449096 loops=1)
+                           Heap Fetches: 0
+                           Buffers: shared read=786 written=2
+                     ->  Parallel Index Only Scan using txn_202508_account_id_created_at_idx on txn_202508 txn_20  (cost=0.42..7263.81 rows=186336 width=0) (actual time=0.106..29.133 rows=447206 loops=1)
+                           Heap Fetches: 0
+                           Buffers: shared hit=2 read=788 written=2
+                     ->  Parallel Index Only Scan using txn_202408_account_id_created_at_idx on txn_202408 txn_8  (cost=0.42..7255.75 rows=183606 width=0) (actual time=0.090..29.114 rows=440696 loops=1)
+                           Heap Fetches: 2373
+                           Buffers: shared hit=2342 read=799 written=4
+                     ->  Parallel Index Only Scan using txn_202412_account_id_created_at_idx on txn_202412 txn_12  (cost=0.42..7226.57 rows=187188 width=0) (actual time=0.090..31.681 rows=449252 loops=1)
+                           Heap Fetches: 0
+                           Buffers: shared read=776 written=280
+                     ->  Parallel Index Only Scan using txn_202409_account_id_created_at_idx on txn_202409 txn_9  (cost=0.42..7154.15 rows=184624 width=0) (actual time=0.102..74.955 rows=147706 loops=3)
+                           Heap Fetches: 1421
+                           Buffers: shared hit=1405 read=771 written=311
+                     ->  Parallel Index Only Scan using txn_202504_merchant_id_created_at_idx on txn_202504 txn_16  (cost=0.42..7114.06 rows=184620 width=0) (actual time=0.086..41.334 rows=221544 loops=2)
+                           Heap Fetches: 0
+                           Buffers: shared hit=3 read=759 written=256
+                     ->  Parallel Index Only Scan using txn_202411_merchant_id_created_at_idx on txn_202411 txn_11  (cost=0.42..6941.88 rows=179339 width=0) (actual time=0.080..27.407 rows=430414 loops=1)
+                           Heap Fetches: 0
+                           Buffers: shared read=747 written=472
+                     ->  Parallel Index Only Scan using txn_202502_merchant_id_created_at_idx on txn_202502 txn_14  (cost=0.42..6320.67 rows=162739 width=0) (actual time=0.068..26.633 rows=390573 loops=1)
+                           Heap Fetches: 0
+                           Buffers: shared hit=1 read=682 written=28
+                     ->  Parallel Index Only Scan using txn_202509_account_id_created_at_idx on txn_202509 txn_21  (cost=0.42..5868.65 rows=144920 width=0) (actual time=0.138..1613.731 rows=347807 loops=1)
+                           Heap Fetches: 0
+                           Buffers: shared hit=1 read=667 written=131
+                     ->  Parallel Seq Scan on txn_202406 txn_6  (cost=0.00..8361.23 rows=199023 width=0) (actual time=0.047..53.281 rows=477642 loops=1)
+                           Buffers: shared read=6371 written=1553
+                     ->  Parallel Seq Scan on txn_202405 txn_5  (cost=0.00..8197.06 rows=195006 width=0) (actual time=0.041..54.621 rows=468224 loops=1)
+                           Buffers: shared read=6247 written=1645
+                     ->  Parallel Seq Scan on txn_202403 txn_3  (cost=0.00..7928.27 rows=188527 width=0) (actual time=0.038..57.839 rows=452629 loops=1)
+                           Buffers: shared read=6043 written=3907
+                     ->  Parallel Seq Scan on txn_202402 txn_2  (cost=0.00..7914.12 rows=188212 width=0) (actual time=0.040..59.102 rows=452276 loops=1)
+                           Buffers: shared read=6032 written=1527
+                     ->  Parallel Seq Scan on txn_202404 txn_4  (cost=0.00..7472.24 rows=177524 width=0) (actual time=3.921..61.206 rows=426331 loops=1)
+                           Buffers: shared hit=149 read=5548 written=679
+                     ->  Parallel Seq Scan on txn_202510 txn_22  (cost=0.00..12.76 rows=276 width=0) (actual time=0.000..0.000 rows=0 loops=1)
+                     ->  Parallel Seq Scan on txn_202511 txn_23  (cost=0.00..12.76 rows=276 width=0) (actual time=0.000..0.000 rows=0 loops=1)
+                     ->  Parallel Seq Scan on txn_202512 txn_24  (cost=0.00..12.76 rows=276 width=0) (actual time=0.001..0.001 rows=0 loops=1)
+ Planning:
+   Buffers: shared hit=1933 read=54 dirtied=3
+ Planning Time: 1941.640 ms
+ JIT:
+   Functions: 80
+   Options: Inlining false, Optimization false, Expressions true, Deforming true
+   Timing: Generation 1.313 ms, Inlining 0.000 ms, Optimization 0.682 ms, Emission 10.679 ms, Total 12.674 ms
+ Execution Time: 2345.184 ms
+(79 rows)
+

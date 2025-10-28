@@ -1,0 +1,31 @@
+                                                                              QUERY PLAN                                                                               
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Limit  (cost=9.45..465.57 rows=100 width=77) (actual time=0.137..0.138 rows=0 loops=1)
+   Buffers: shared hit=13 read=2
+   ->  Append  (cost=9.45..825.91 rows=179 width=77) (actual time=0.135..0.136 rows=0 loops=1)
+         Buffers: shared hit=13 read=2
+         Subplans Removed: 18
+         ->  Index Scan using txn_202512_account_id_created_at_idx on txn_202512 txn_6  (cost=0.15..8.17 rows=1 width=144) (actual time=0.007..0.008 rows=0 loops=1)
+               Index Cond: ((account_id = '28ae18ce-dd90-45d9-8f86-c6578a14108e'::uuid) AND (created_at >= (now() - '90 days'::interval)))
+               Buffers: shared hit=2
+         ->  Index Scan using txn_202511_account_id_created_at_idx on txn_202511 txn_5  (cost=0.15..8.17 rows=1 width=144) (actual time=0.007..0.007 rows=0 loops=1)
+               Index Cond: ((account_id = '28ae18ce-dd90-45d9-8f86-c6578a14108e'::uuid) AND (created_at >= (now() - '90 days'::interval)))
+               Buffers: shared hit=2
+         ->  Index Scan using txn_202510_account_id_created_at_idx on txn_202510 txn_4  (cost=0.15..8.17 rows=1 width=144) (actual time=0.005..0.005 rows=0 loops=1)
+               Index Cond: ((account_id = '28ae18ce-dd90-45d9-8f86-c6578a14108e'::uuid) AND (created_at >= (now() - '90 days'::interval)))
+               Buffers: shared hit=2
+         ->  Index Scan using txn_202509_account_id_created_at_idx on txn_202509 txn_3  (cost=0.43..237.59 rows=58 width=77) (actual time=0.040..0.040 rows=0 loops=1)
+               Index Cond: ((account_id = '28ae18ce-dd90-45d9-8f86-c6578a14108e'::uuid) AND (created_at >= (now() - '90 days'::interval)))
+               Buffers: shared hit=2 read=1
+         ->  Index Scan using txn_202508_account_id_created_at_idx on txn_202508 txn_2  (cost=0.43..390.33 rows=96 width=77) (actual time=0.053..0.054 rows=0 loops=1)
+               Index Cond: ((account_id = '28ae18ce-dd90-45d9-8f86-c6578a14108e'::uuid) AND (created_at >= (now() - '90 days'::interval)))
+               Buffers: shared hit=2 read=1
+         ->  Index Scan using txn_202507_account_id_created_at_idx on txn_202507 txn_1  (cost=0.43..20.51 rows=4 width=77) (actual time=0.021..0.021 rows=0 loops=1)
+               Index Cond: ((account_id = '28ae18ce-dd90-45d9-8f86-c6578a14108e'::uuid) AND (created_at >= (now() - '90 days'::interval)))
+               Buffers: shared hit=3
+ Planning:
+   Buffers: shared hit=2282 read=76 dirtied=26
+ Planning Time: 4.810 ms
+ Execution Time: 0.320 ms
+(27 rows)
+
