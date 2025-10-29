@@ -2,19 +2,16 @@ Repo: https://github.com/bargarvaz/proyecto_etl
 
 Cómo ejecutar:
   cd compose && docker compose up -d
+  
   ../scripts/bootstrap.sh
+  
   python3 ./scripts/publish.py
-
-Verificación rápida:
-  payments.txn crece y etl.txn_daily_agg tiene datos
+  
   Prometheus (http://localhost:9090) con alerta PostgresDown
-  Grafana (http://localhost:3000, admin/admin) → dashboard ETL Overview
-  Backups:
-    ./scripts/backup.sh (restore a payments_restore con el último .sql.gz)
-
-Notas:
-  Incluye planes EXPLAIN en docs/plans/
-  .env.example con variables; .env está ignorado
+  
+  Grafana (http://localhost:3000, admin/admin) → dashboard ETL
+  
+  ./scripts/backup.sh (restore a payments_restore con el último .sql.gz)
 
 ------
 
@@ -123,6 +120,7 @@ Mantenimiento
 
 Barush Garduño
 📧 bargarvaz@gmail.com
+
 💼 Proyecto técnico: DBA & ETL con RabbitMQ, PostgreSQL
 
 ---
